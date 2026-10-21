@@ -24,9 +24,7 @@ A RESTful API for managing products, users, authentication, file uploads, and re
 
 2. **Install dependencies**
    ```sh
-   yarn install
-   # or
-   npm install
+   pnpm install
    ```
 
 3. **Setup environment variables**
@@ -39,9 +37,7 @@ A RESTful API for managing products, users, authentication, file uploads, and re
 
 5. **Start the development server**
    ```sh
-   yarn start:dev
-   # or
-   npm run start:dev
+   pnpm run start:dev
    ```
 
 6. **Seed the database**
@@ -62,8 +58,8 @@ A RESTful API for managing products, users, authentication, file uploads, and re
 
 ## Scripts
 
-- `yarn start:dev` - Start the server in development mode
-- `yarn build` - Build the project
+- `pnpm run start:dev` - Start the server in development mode
+- `pnpm run build` - Build the project
 - `docker-compose up -d` - Start the PostgreSQL database
 
 ## Environment Variables

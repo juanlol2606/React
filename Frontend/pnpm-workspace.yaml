@@ -1,0 +1,6 @@
+allowBuilds:
+  '@swc/core': true
+  msw: true
+overrides:
+  browserslist: ^4.28.7
+  baseline-browser-mapping: ^2.11.20

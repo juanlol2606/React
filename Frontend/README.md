@@ -42,8 +42,6 @@ Please follow the instructions in the backend repository to set up and run the A
 2. **Install dependencies**
    ```bash
    pnpm install
-   # or
-   npm install
    ```
 
 3. **Configure Environment Variables**
@@ -62,8 +60,6 @@ Please follow the instructions in the backend repository to set up and run the A
 4. **Run the Development Server**
    ```bash
    pnpm dev
-   # or
-   npm run dev
    ```
 
    Open [http://localhost:5173](http://localhost:5173) in your browser.

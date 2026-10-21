@@ -39,9 +39,9 @@ export class FilesController {
     @Res() res: Response,
     @Param('imageName') imageName: string,
   ) {
-    const path = this.filesService.getStaticProductImage(imageName);
+    const { root, fileName } = this.filesService.getStaticProductImage(imageName);
 
-    res.sendFile(path);
+    res.sendFile(fileName, { root });
   }
 
   @Post('product')

@@ -1,0 +1,21 @@
+# Dependencias y artefactos de compilación
+node_modules/
+dist/
+build/
+coverage/
+
+# Variables de entorno (se versionan solo las plantillas)
+.env
+.env.*
+!.env.template
+!.env.example
+
+# Registros
+*.log
+
+# Sistema operativo y editores
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp

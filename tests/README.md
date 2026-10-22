@@ -25,4 +25,4 @@ pnpm run test:cov:auth   # cobertura del módulo Auth
 
 La salida completa de la cobertura está en [`resultados/cobertura-auth.txt`](resultados/cobertura-auth.txt).
 
-Pendiente: pruebas e2e con PostgreSQL, pruebas del Frontend (Vitest) y CI. Ver [ADR-004](../docs/adr/ADR-004-estrategia-de-pruebas-automatizadas.md).
+Pendiente: pruebas e2e con PostgreSQL, pruebas del Frontend (Vitest) y CI. Ver [ADR-004](../docs/adr/ADR-001-suite-de-pruebas-automatizadas-para-auth.md).

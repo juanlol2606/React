@@ -13,9 +13,9 @@ Problema 1, endpoints de prueba en producción: `AuthController` expone `GET /au
 4. Retirar los `console.log` restantes (por ejemplo en `handleDBErrors`) y usar `Logger` de NestJS.
 
 ## Código afectado
-- `Backend/src/auth/auth.controller.ts` (rutas `private*` y `console.log`)
-- `Backend/src/auth/auth.service.ts` (`console.log` en `handleDBErrors`)
-- Decoradores `@Auth`, `@RoleProtected` y `@GetUser` en `Backend/src/auth/decorators/`, sin cambios, ya usados como forma estándar
+- `src/backend/src/auth/auth.controller.ts` (rutas `private*` y `console.log`)
+- `src/backend/src/auth/auth.service.ts` (`console.log` en `handleDBErrors`)
+- Decoradores `@Auth`, `@RoleProtected` y `@GetUser` en `src/backend/src/auth/decorators/`, sin cambios, ya usados como forma estándar
 
 ## Atributo de calidad que mejora (semana 8)
 **Seguridad y Mantenibilidad:** se elimina la exposición de headers y los logs de depuración en producción, y hay menos código sin valor de negocio que mantener.

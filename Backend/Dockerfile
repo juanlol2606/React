@@ -1,24 +1,28 @@
 FROM node:24-alpine AS dev
 WORKDIR /app
-COPY package.json ./
-RUN npm install
-CMD [ "npm","run","start:dev" ]
+RUN corepack enable
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install
+CMD [ "pnpm","run","start:dev" ]
 
 FROM node:24-alpine AS dev-deps
 WORKDIR /app
-COPY package.json package.json
-RUN npm install --no-optional --frozen-lockfile
+RUN corepack enable
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --frozen-lockfile
 
 FROM node:24-alpine AS builder
 WORKDIR /app
+RUN corepack enable
 COPY --from=dev-deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build
+RUN pnpm run build
 
 FROM node:24-alpine AS prod-deps
 WORKDIR /app
-COPY package.json package.json
-RUN npm install --production --no-optional --frozen-lockfile
+RUN corepack enable
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
+RUN pnpm install --prod --frozen-lockfile
 
 FROM node:24-alpine AS prod
 EXPOSE 3000

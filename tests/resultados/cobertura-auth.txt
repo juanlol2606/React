@@ -1,0 +1,40 @@
+$ jest --coverage --collectCoverageFrom="auth/**/*.ts" --collectCoverageFrom="!auth/**/*.spec.ts"
+PASS src/auth/guards/user-role.guard.spec.ts (5.238 s)
+PASS src/auth/auth.service.spec.ts (6.977 s)
+PASS src/auth/strategies/jwt.strategy.spec.ts (7.091 s)
+PASS src/auth/auth.integration.spec.ts (7.313 s)
+------------------------------|---------|----------|---------|---------|-------------------
+File                          | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+------------------------------|---------|----------|---------|---------|-------------------
+All files                     |   89.67 |    85.71 |   79.41 |   90.38 |                   
+ auth                         |   79.03 |      100 |   91.66 |      80 |                   
+  auth.controller.ts          |     100 |      100 |     100 |     100 |                   
+  auth.module.ts              |       0 |      100 |       0 |       0 | 1-42              
+  auth.service.ts             |     100 |      100 |     100 |     100 |                   
+ auth/decorators              |   95.83 |    33.33 |   83.33 |     100 |                   
+  auth.decorator.ts           |     100 |      100 |     100 |     100 |                   
+  get-user.decorator.ts       |   85.71 |    33.33 |     100 |     100 | 14-16             
+  index.ts                    |     100 |      100 |   66.66 |     100 |                   
+  role-protected.decorator.ts |     100 |      100 |     100 |     100 |                   
+ auth/dto                     |   97.05 |      100 |   83.33 |   96.66 |                   
+  auth-response.dto.ts        |   83.33 |      100 |       0 |   83.33 | 11                
+  create-user.dto.ts          |     100 |      100 |     100 |     100 |                   
+  index.ts                    |     100 |      100 |     100 |     100 |                   
+  login-user.dto.ts           |     100 |      100 |     100 |     100 |                   
+  user-response.dto.ts        |     100 |      100 |     100 |     100 |                   
+ auth/entities                |   78.94 |      100 |       0 |   81.25 |                   
+  user.entity.ts              |   78.94 |      100 |       0 |   81.25 | 69,74,79          
+ auth/guards                  |     100 |      100 |     100 |     100 |                   
+  user-role.guard.ts          |     100 |      100 |     100 |     100 |                   
+ auth/interfaces              |     100 |      100 |     100 |     100 |                   
+  index.ts                    |     100 |      100 |     100 |     100 |                   
+  valid-roles.interface.ts    |     100 |      100 |     100 |     100 |                   
+ auth/strategies              |     100 |      100 |     100 |     100 |                   
+  jwt.strategy.ts             |     100 |      100 |     100 |     100 |                   
+------------------------------|---------|----------|---------|---------|-------------------
+
+Test Suites: 4 passed, 4 total
+Tests:       45 passed, 45 total
+Snapshots:   0 total
+Time:        13.382 s, estimated 23 s
+Ran all test suites.

@@ -1,0 +1,26 @@
+@startuml 04-despliegue
+!include <C4/C4_Deployment>
+!include _estilos.iuml
+LAYOUT_TOP_DOWN()
+title [Despliegue] Teslo Shop – estado objetivo (Backend/docker-compose.yml)
+
+Deployment_Node(pc, "Equipo del usuario", "Navegador web") {
+  Container(spa, "Frontend SPA", "Build de Vite (estático)", "La cookie de sesión httpOnly no es accesible desde JavaScript.", $tags="mvp")
+}
+
+Deployment_Node(host, "Servidor", "Linux + Docker Engine") {
+  Deployment_Node(compose, "Docker Compose", "docker-compose.yml / docker-compose.prod.yml") {
+    Deployment_Node(app, "Contenedor shop-app", "node:24-alpine · target STAGE (dev | prod) · puerto ${PORT}=3000") {
+      Container(api, "API REST", "NestJS (dist/main.js)", "AuthModule (MVP), Swagger en /api, WebSocket gateway. Variables: JWT_SECRET, DB_*.", $tags="mvp")
+    }
+    Deployment_Node(pg, "Contenedor ShopDB", "postgres:17 · puerto 5432 · volumen postgres-db") {
+      ContainerDb(db, "Base de datos ShopDB", "PostgreSQL 17", "Tabla users y demás entidades.")
+    }
+  }
+}
+
+Rel(spa, api, "/api/*", "HTTPS · cookie httpOnly/Secure/SameSite · X-CSRF-Token")
+Rel(api, db, "TypeORM", "TCP 5432 (DB_HOST=ShopDB)")
+
+SHOW_LEGEND()
+@enduml

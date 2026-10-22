@@ -1,0 +1,4 @@
+AddElementTag("nuevo", $bgColor="#1e8449", $borderColor="#145a32", $fontColor="#ffffff", $legendText="Nuevo")
+AddElementTag("modificado", $bgColor="#d68910", $borderColor="#9c640c", $fontColor="#ffffff", $legendText="Modificado")
+AddElementTag("mantiene", $bgColor="#2e86c1", $borderColor="#1b4f72", $fontColor="#ffffff", $legendText="Se mantiene")
+AddElementTag("mvp", $bgColor="#c0392b", $borderColor="#7b241c", $fontColor="#ffffff", $legendText="Contiene el módulo MVP (Auth)")

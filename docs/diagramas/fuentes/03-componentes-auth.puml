@@ -1,0 +1,49 @@
+@startuml 03-componentes-auth
+!include <C4/C4_Component>
+!include _estilos.iuml
+LAYOUT_TOP_DOWN()
+title [Componentes] Módulo Auth (MVP) – Frontend y Backend – estado objetivo
+
+Person(usuario, "Cliente / Administrador")
+
+Container_Boundary(spa, "Frontend SPA – Frontend/src (React + Vite + Zustand)") {
+  Component(pages, "LoginPage / RegisterPage + ProtectedRoutes.tsx", "React, React Router", "Formularios de acceso. AuthenticatedRoute, NotAuthenticatedRoute y AdminRoute redirigen según authStatus e isAdmin().", $tags="mantiene")
+  Component(store, "auth.store.ts", "Zustand", "user, authStatus, isAdmin(), login, register, checkAuthStatus, logout. Sin campo token ni localStorage.", $tags="modificado")
+  Component(actions, "Acciones de Auth", "auth/actions", "login.action / register.action (se mantienen), check-auth.action (sin localStorage), logout.action (nuevo).", $tags="modificado")
+  Component(http, "eShopApi.ts", "Axios", "withCredentials: true y cabecera X-CSRF-Token. Se elimina el interceptor Authorization: Bearer.", $tags="modificado")
+}
+
+Container_Boundary(auth, "API REST – Backend/src/auth (AuthModule, NestJS)") {
+  Component(cfg, "Configuración HTTP global", "main.ts", "CORS con credentials, cookie-parser y ClassSerializerInterceptor global.", $tags="modificado")
+  Component(csrf, "Middleware CSRF", "nuevo", "Double-submit: exige X-CSRF-Token en POST, PUT, PATCH y DELETE (403 si falla).", $tags="nuevo")
+  Component(ctrl, "AuthController", "auth.controller.ts", "POST /api/auth/register, /login, /logout (nuevo); GET /api/auth/check-status. Escribe/limpia la cookie httpOnly. Sin /private*.", $tags="modificado")
+  Component(dtos, "DTOs de entrada", "dto/", "CreateUserDto, LoginUserDto (class-validator).", $tags="mantiene")
+  Component(svc, "AuthService", "auth.service.ts", "create() con bcrypt, login(), checkAuthStatus() (renueva el token). Sin 'delete user.password'.", $tags="modificado")
+  Component(dec, "@Auth(...roles) + UserRoleGuard", "decorators/, guards/", "RoleProtected + AuthGuard('jwt') + UserRoleGuard. 403 si el rol no coincide.", $tags="mantiene")
+  Component(strategy, "JwtStrategy", "strategies/jwt.strategy.ts", "Extrae el JWT de la cookie (antes: header Bearer), valida firma, expiración y usuario activo. 401 si no.", $tags="modificado")
+  Component(jwt, "JwtModule / JwtService", "auth.module.ts", "Firma con JWT_SECRET, expiresIn explícito.", $tags="modificado")
+  Component(user, "Entidad User", "entities/user.entity.ts", "password con select:false + @Exclude.", $tags="modificado")
+}
+
+ContainerDb(db, "ShopDB", "PostgreSQL 17", "Tabla users")
+Container_Ext(otros, "Otros módulos de la API", "Products, Files, Seed", "Protegen sus rutas con @Auth(...roles)")
+
+Rel(usuario, pages, "Usa")
+Rel(pages, store, "login() / register() / authStatus")
+Rel(store, actions, "Invoca")
+Rel(actions, http, "Usa")
+Rel(http, cfg, "/api/auth/*", "JSON/HTTPS + cookie httpOnly + X-CSRF-Token")
+Rel(cfg, csrf, "Pasa la petición a")
+Rel(csrf, ctrl, "Si el token CSRF es válido")
+Rel(ctrl, dtos, "Valida el body")
+Rel(ctrl, svc, "Usa")
+Rel(ctrl, dec, "check-status y logout con @Auth()")
+Rel(dec, strategy, "Delega en")
+Rel(svc, jwt, "Firma el JWT")
+Rel(svc, user, "Repository<User>")
+Rel(strategy, user, "Busca usuario por id")
+Rel(user, db, "TypeORM")
+Rel(otros, dec, "Reutilizan")
+
+SHOW_LEGEND()
+@enduml

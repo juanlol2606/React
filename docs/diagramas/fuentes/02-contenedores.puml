@@ -1,0 +1,21 @@
+@startuml 02-contenedores
+!include <C4/C4_Container>
+!include _estilos.iuml
+title [Contenedores] Teslo Shop – estado objetivo
+
+Person(cliente, "Cliente", "Rol 'user'")
+Person(admin, "Administrador", "Rol 'admin' / 'super-user'")
+
+System_Boundary(eshop, "Teslo Shop (E-Shop)") {
+  Container(spa, "Frontend SPA (Frontend/)", "React, Vite, TypeScript, Zustand, Axios", "Tienda y panel de administración. Mantiene solo user y authStatus (sin token); envía la cookie de sesión y la cabecera X-CSRF-Token.", $tags="mvp")
+  Container(api, "API REST (Backend/)", "NestJS, TypeORM, Passport", "Prefijo /api. Módulos: Auth (MVP), Products, Files, Seed, Common, MessageWs (WebSocket). Swagger en /api. El AuthModule emite el JWT en cookie httpOnly, valida CSRF y protege rutas por rol.", $tags="mvp")
+  ContainerDb(db, "Base de datos ShopDB", "PostgreSQL 17", "Tabla users (hash bcrypt, roles), productos e imágenes.")
+}
+
+Rel(cliente, spa, "Usa", "HTTPS / navegador")
+Rel(admin, spa, "Usa", "HTTPS / navegador")
+Rel(spa, api, "Llama a /api/*", "JSON/HTTPS · cookie httpOnly + Secure + SameSite · X-CSRF-Token · CORS con credentials")
+Rel(api, db, "Lee y escribe", "TypeORM / TCP 5432")
+
+SHOW_LEGEND()
+@enduml

@@ -1,0 +1,16 @@
+@startuml 01-contexto
+!include <C4/C4_Context>
+title [Contexto] Teslo Shop (E-Shop) – estado objetivo tras la refactorización del módulo Auth (MVP)
+
+Person(cliente, "Cliente", "Rol 'user'. Se registra, inicia sesión, navega y compra productos.")
+Person(admin, "Administrador", "Rol 'admin' / 'super-user'. Gestiona el catálogo desde el panel de administración.")
+Person_Ext(atacante, "Atacante externo", "Escenario 1 (Seguridad): intenta robar la sesión mediante XSS.")
+
+System(eshop, "Teslo Shop (E-Shop)", "Comercio electrónico. Contiene el módulo Auth (MVP): registro, login con JWT en cookie httpOnly, protección CSRF y autorización por roles.")
+
+Rel(cliente, eshop, "Se registra, inicia sesión y compra", "HTTPS")
+Rel(admin, eshop, "Inicia sesión y administra productos", "HTTPS")
+Rel(atacante, eshop, "Intenta leer el token (bloqueado: cookie httpOnly)", "XSS")
+
+SHOW_LEGEND()
+@enduml

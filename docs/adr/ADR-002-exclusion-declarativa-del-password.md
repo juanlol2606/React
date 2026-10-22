@@ -14,9 +14,9 @@ Quitar los `delete user.password` y excluir el campo de forma declarativa:
 4. Agregar pruebas que verifiquen que `register`, `login` y `check-status` nunca devuelven `password`.
 
 ## Código afectado
-- `Backend/src/auth/auth.service.ts` (`create()` y `login()`)
-- `Backend/src/auth/entities/user.entity.ts`
-- `Backend/src/main.ts` o `Backend/src/auth/auth.controller.ts` (interceptor)
+- `src/backend/src/auth/auth.service.ts` (`create()` y `login()`)
+- `src/backend/src/auth/entities/user.entity.ts`
+- `src/backend/src/main.ts` o `src/backend/src/auth/auth.controller.ts` (interceptor)
 - Tests del ADR-0001 (verifican la exclusión)
 
 ## Atributo de calidad que mejora (semana 8)

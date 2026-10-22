@@ -19,9 +19,9 @@ Crear, antes de tocar seguridad y mantenibilidad, una suite mínima que cubra lo
 Pruebas unitarias con Jest (repositorio y `JwtService` simulados) para `AuthService` y los guards, y pruebas e2e con Supertest contra `/auth/*`. En el frontend, agregar Vitest y el script `test` para el store de Zustand (`auth.store.ts`). Ejecutar `jest --coverage` en el pipeline.
 
 ## Código afectado
-- Nuevo: `Backend/src/auth/auth.service.spec.ts`, `Backend/src/auth/auth.controller.spec.ts`, `Backend/src/auth/strategies/jwt.strategy.spec.ts`, `Backend/src/auth/guards/user-role.guard.spec.ts`
-- Nuevo: `Backend/test/auth.e2e-spec.ts` (junto a `app.e2e-spec.ts`)
-- `Backend/package.json` (umbral de cobertura) y `Frontend/package.json` (script `test`, Vitest)
+- Nuevo: `src/backend/src/auth/auth.service.spec.ts`, `src/backend/src/auth/auth.controller.spec.ts`, `src/backend/src/auth/strategies/jwt.strategy.spec.ts`, `src/backend/src/auth/guards/user-role.guard.spec.ts`
+- Nuevo: `src/backend/test/auth.e2e-spec.ts` (junto a `app.e2e-spec.ts`)
+- `src/backend/package.json` (umbral de cobertura) y `src/frontend/package.json` (script `test`, Vitest)
 - Nuevo en el frontend: pruebas de `auth.store.ts`
 
 ## Atributo de calidad que mejora (semana 8)

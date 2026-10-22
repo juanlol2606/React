@@ -14,10 +14,10 @@ Problema 3, token guardado en `localStorage`: `auth.store.ts` guarda el JWT con 
 5. **Frontend:** quitar `localStorage` de `auth.store.ts`, configurar Axios con `withCredentials: true` en `eShopApi.ts` y eliminar el header `Authorization` del interceptor. El store guardará solo el estado del usuario en memoria.
 
 ## Código afectado
-- `Backend/src/auth/auth.controller.ts` (`login`, `register`, `check-status`, nuevo `logout`)
-- `Backend/src/auth/strategies/jwt.strategy.ts` (extracción desde cookie)
-- `Backend/src/auth/auth.module.ts` (`expiresIn`)
-- `Backend/src/main.ts` (CORS con credenciales, `cookie-parser`, CSRF)
+- `src/backend/src/auth/auth.controller.ts` (`login`, `register`, `check-status`, nuevo `logout`)
+- `src/backend/src/auth/strategies/jwt.strategy.ts` (extracción desde cookie)
+- `src/backend/src/auth/auth.module.ts` (`expiresIn`)
+- `src/backend/src/main.ts` (CORS con credenciales, `cookie-parser`, CSRF)
 - Frontend: `auth.store.ts`, `eShopApi.ts`, `login.action.ts` y `register.action.ts`
 
 ## Atributo de calidad que mejora (semana 8)

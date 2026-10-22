@@ -11,7 +11,12 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 import { User } from './entities/user.entity';
-import { LoginUserDto, CreateUserDto } from './dto';
+import {
+  AuthResponseDto,
+  CreateUserDto,
+  LoginUserDto,
+  UserResponseDto,
+} from './dto';
 import { JwtPayload } from './interfaces/jwt-payload.interface';
 
 @Injectable()
@@ -21,7 +26,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async create(createUserDto: CreateUserDto) {
+  async create(createUserDto: CreateUserDto): Promise<AuthResponseDto> {
     try {
       const { password, ...userData } = createUserDto;
 
@@ -31,18 +36,14 @@ export class AuthService {
       });
 
       await this.userRepository.save(user);
-      delete user.password;
 
-      return {
-        user,
-        token: this.getJwtToken({ id: user.id }),
-      };
+      return this.buildAuthResponse(user);
     } catch (error) {
       this.handleDBErrors(error);
     }
   }
 
-  async login(loginUserDto: LoginUserDto) {
+  async login(loginUserDto: LoginUserDto): Promise<AuthResponseDto> {
     const { password, email } = loginUserDto;
 
     const user = await this.userRepository.findOne({
@@ -63,17 +64,22 @@ export class AuthService {
     if (!bcrypt.compareSync(password, user.password!))
       throw new UnauthorizedException('Credentials are not valid (password)');
 
-    delete user.password;
-
-    return {
-      user,
-      token: this.getJwtToken({ id: user.id }),
-    };
+    return this.buildAuthResponse(user);
   }
 
-  checkAuthStatus(user: User) {
+  checkAuthStatus(user: User): AuthResponseDto {
+    return this.buildAuthResponse(user);
+  }
+
+  /**
+   * Único punto donde se arma la respuesta de autenticación (ADR-001).
+   * La exclusión de campos sensibles (p. ej. `password`) es declarativa: la
+   * define UserResponseDto mediante @Expose(), no una línea `delete` en cada
+   * método.
+   */
+  private buildAuthResponse(user: User): AuthResponseDto {
     return {
-      user,
+      user: UserResponseDto.fromEntity(user),
       token: this.getJwtToken({ id: user.id }),
     };
   }
